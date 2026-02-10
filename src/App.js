@@ -1,11 +1,3 @@
-// import SheetPage from "./pages/SheetPage";
-
-// function App() {
-//   return <SheetPage />;
-  
-// }
-
-// export default App;
 
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
@@ -53,10 +45,10 @@ function App() {
     setIsSaving(true);
     try {
       await questionAPI.saveSheet(topics);
-      // Show success message
+    
     } catch (error) {
       console.error('Failed to save:', error);
-      // Show error message
+      
     } finally {
       setIsSaving(false);
     }
@@ -83,14 +75,14 @@ function App() {
       reorderSubTopics(topicId, source.index, destination.index);
     } else if (type === 'question') {
       const sourceIds = source.droppableId.split('-');
-      const destIds = destination.droppableId.split('-');
+      
       
       if (sourceIds[0] === 'topic' && sourceIds[2] === 'questions') {
-        // Direct topic questions
+        
         const topicId = sourceIds[1];
         reorderQuestions(topicId, null, source.index, destination.index);
       } else if (sourceIds[0] === 'subtopic') {
-        // Subtopic questions
+       
         const subTopicId = sourceIds[1];
         const topicId = topics.find(topic => 
           topic.subTopics.some(st => st.id === subTopicId)
@@ -103,7 +95,7 @@ function App() {
     }
   };
 
-  // Calculate overall statistics
+ 
   const overallStats = topics.reduce((acc, topic) => {
     const topicTotal = topic.questions.length + topic.subTopics.reduce((sum, st) => sum + st.questions.length, 0);
     const topicSolved = topic.questions.filter(q => q.solved).length + 
@@ -161,7 +153,7 @@ function App() {
             </div>
           </div>
 
-          {/* Statistics */}
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
             <div className="bg-blue-50 rounded-lg p-4">
               <div className="flex items-center">
@@ -202,7 +194,7 @@ function App() {
           </div>
         </div>
 
-        {/* Topics */}
+        
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="topics" type="topic">
             {(provided, snapshot) => (
@@ -235,7 +227,7 @@ function App() {
           </Droppable>
         </DragDropContext>
 
-        {/* Add Topic Modal */}
+        
         <AddItemModal
           isOpen={showTopicModal}
           onClose={() => setShowTopicModal(false)}
